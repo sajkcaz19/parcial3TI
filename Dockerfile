@@ -1,11 +1,12 @@
 # Use an official Node.js runtime as a parent image
-FROM node:14
+FROM node:20-slim
 
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
+RUN npm ci --only=production
 
 # Install app dependencies
 RUN npm install
@@ -17,4 +18,5 @@ COPY . .
 EXPOSE 3000
 
 # Define the command to run the application
+USER node 
 CMD ["npm", "start"]
